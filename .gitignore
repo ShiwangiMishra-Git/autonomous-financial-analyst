@@ -44,7 +44,7 @@ docs/*
 # Other notebook variants / scratch drafts (not the canonical notebook)
 *copy*.ipynb
 *.executed.ipynb
-Autonomous_financial_analyst_FINAL_SUBMISSION.ipynb
+*.old-*.ipynb
 Merged-Autonomous_financial_analyst_Learners_Notebook*.ipynb
 Part 1-Autonomous_financial_analyst_Learners_Notebook.ipynb
 Part 2-Autonomous_financial_analyst_Learners_Notebook.ipynb
