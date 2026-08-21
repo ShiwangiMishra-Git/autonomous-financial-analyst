@@ -17,7 +17,11 @@ __pycache__/
 .claude/
 
 # Data / large local artifacts
-content/
+content/*
+!content/Companies-AI-Initiatives.zip
+!content/pharma_rag_official_sources.zip
+!content/vectorstore/
+!content/vectorstore_pharma_clean/
 .api_cache/
 .research_runs/
 financial_chat_sessions/
