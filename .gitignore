@@ -28,6 +28,9 @@ pharma_acceptance_runs/
 hf_spaces/
 OPENAI/
 
+scripts/
+run_jupyter.sh
+
 # Other notebook variants / scratch drafts (not the canonical notebook)
 *copy*.ipynb
 *.executed.ipynb

@@ -6,23 +6,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 The working notebook is `Autonomous_financial_analyst_Learners_Notebook copy.ipynb`, for a JHU Agentic AI course assignment ("Project 2"). It is a **fill-in-the-blank learner exercise**: code cells contain `"""<--- 🧩🧩🧩 Your Code Goes Here 🧩🧩🧩 --->"""` placeholders that the student must replace, plus mark allocations (e.g. `-【2 Marks】`) in the markdown headers. Do not remove the placeholder markers or mark annotations unless explicitly asked to — they're part of the assignment scaffolding, not leftover code.
 
-Treat these notebooks as read-only reference artifacts unless the user explicitly changes that instruction:
-
-- `Merged-Autonomous_financial_analyst_Learners_Notebook.ipynb`
-- `Part 1-Autonomous_financial_analyst_Learners_Notebook.ipynb`
-- `Part 2-Autonomous_financial_analyst_Learners_Notebook.ipynb`
-- `tests/Unsolved -Autonomous_financial_analyst_Learners_Notebook.ipynb`
+Treat `tests/Unsolved -Autonomous_financial_analyst_Learners_Notebook.ipynb` as a read-only reference artifact unless the user explicitly changes that instruction.
 
 There is no standalone application `.py` source. The implementation runs inside the working notebook, originally authored for Google Colab, while deterministic notebook-support tests live under `tests/`. A `requirements.txt` exists alongside the notebook for local/non-Colab setup — it mirrors the notebook's own install cell exactly (plus `ipykernel`, needed to run locally as a Jupyter kernel but not part of the notebook's own cell).
 
 ## Setup and running
 
-- A local `.venv` already exists here, set up via `../../../CommonScripts/setup-jupyter-kernel.sh` (see the top-level `CLAUDE.md`), with `requirements.txt` installed and registered as the Jupyter kernel **"Project 2"** (`project-2-`). The notebook's own `metadata.kernelspec` already points at that kernel name.
-- **In VS Code/Cursor:** open the notebook and pick **"Project 2"** from the kernel picker. Note this always needs one manual click the first time — the IDE does not auto-attach a kernel just because the notebook metadata names it, even when a matching registered kernel exists.
-- **Standalone JupyterLab (browser):** run `./run_jupyter.sh` from this directory (or from anywhere — it `cd`s into its own location first). It launches `jupyter lab`; select **"Project 2"** from the kernel dropdown once the notebook is open.
-- If the `.venv` ever needs rebuilding from scratch: re-run `setup-jupyter-kernel.sh` from this directory.
-- Colab / notebook-native (no local venv): run the first code cell (`!pip install langchain==0.3.27 langchain-core==0.3.79 langchain-openai==0.3.11 langchain-community==0.3.31 langgraph==0.3.7 tavily-python yfinance==0.2.66 chromadb==1.3.4 pypdf==6.2.0 tiktoken==0.12.0`).
-- Needs a `config.json` (not present in this directory yet — must be created) with `API_KEY`, `OPENAI_API_BASE`, and `TAVILY_API_KEY`. Per the parent `CLAUDE.md`, this project uses the **Great Learning OpenAI-compatible proxy** (`https://aibe.mygreatlearning.com/openai/v1`), not OpenAI directly — check `config.json`'s `OPENAI_API_BASE` before assuming standard OpenAI endpoints. **Never read, print, or commit `config.json` once it exists.**
+- Install `requirements.txt` into a virtualenv and register it as a Jupyter kernel to run locally (in VS Code/Cursor or JupyterLab), or run the notebook's own install cell in Colab.
+- Needs a `config.json` (copy `config.json.example` and fill in the values) with `OPENAI_API_KEY`, `OPENAI_API_BASE`, and `TAVILY_API_KEY`. This project may point `OPENAI_API_BASE` at an OpenAI-compatible proxy rather than OpenAI directly — check the value before assuming standard OpenAI endpoints. **Never read, print, or commit `config.json` once it exists.**
 - Part 2 (RAG) expects `/content/Companies-AI-Initiatives.zip` to already exist and unzips it to `/content/Companies-AI-Initiatives/` — this is a Colab-specific absolute path and will need adjusting to run locally.
 
 ## Architecture
