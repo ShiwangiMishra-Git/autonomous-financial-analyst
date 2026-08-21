@@ -2,7 +2,7 @@
 
 A LangGraph-based agentic financial research assistant, built for a JHU Agentic AI course assignment. The base agent is built up in increasing sophistication (reactive → goal-oriented → full charter), then extended with RAG over private company documents, and further extended with a unified router that dispatches technology and pharma research questions through one shared agent/tools/citation-validator graph.
 
-Full write-up (architecture, trade-offs, limitations, future scope): [SUBMISSION_SUMMARY_WITH_HLD.md](SUBMISSION_SUMMARY_WITH_HLD.md).
+Full write-up (architecture, trade-offs, limitations, future scope): [docs/SUBMISSION_SUMMARY_WITH_HLD.md](docs/SUBMISSION_SUMMARY_WITH_HLD.md).
 
 ## Architecture
 
@@ -24,8 +24,8 @@ User Question → Unified Query Router → Technology / Pharma AgentProfile
 
 - `Autonomous_financial_analyst_CLEAN_REBUILD.ipynb` — the main notebook.
 - `tests/` — deterministic tests for notebook-support code.
-- `docs/`, `diagrams/` — design docs and diagrams.
-- `SUBMISSION_SUMMARY_WITH_HLD.md` — full HLD write-up.
+- `diagrams/` — architecture diagrams.
+- `docs/SUBMISSION_SUMMARY_WITH_HLD.md` — full HLD write-up.
 
 ## Setup
 

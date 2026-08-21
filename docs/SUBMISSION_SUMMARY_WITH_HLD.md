@@ -120,7 +120,7 @@ Technology reports and pharmaceutical filings are stored in separate vector coll
 
 The diagrams above summarize the design evolution; the flow below shows how one request actually moves through the completed system, separating what happens **outside** the compiled LangGraph (routing and presentation) from what happens **inside** it (the shared agent/tool/validator loop). Rendered image first, for viewers without Mermaid support, followed by the Mermaid source:
 
-![Full request lifecycle diagram](diagrams/full_lifecycle_diagram.png)
+![Full request lifecycle diagram](../diagrams/full_lifecycle_diagram.png)
 
 ```mermaid
 flowchart TD
@@ -262,7 +262,7 @@ So everything except the two disk-backed stores disappears on restart, and nothi
 
 An earlier version of this multi-domain extension used a hybrid dispatcher that routed to three structurally different execution shapes: a fully deterministic scoring engine for comparisons, a partially-agentic pipeline for deep dives, and a separately-wrapped set of subgraphs for the pharma domain — three shapes glued together instead of one shared pattern. That structural hybridity was directly responsible for real bugs, not just incidentally related to them: because each path carried its own logic, a scoring-threshold table drifted from the actual recommendation logic without anyone noticing, and a cost-budget guardrail added to one domain never propagated to the other, since there was no single place to add it once.
 
-![Hybrid dispatcher vs shared graph diagram](diagrams/hybrid_dispatcher_diagram.png)
+![Hybrid dispatcher vs shared graph diagram](../diagrams/hybrid_dispatcher_diagram.png)
 
 ```mermaid
 flowchart TD

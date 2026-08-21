@@ -34,6 +34,8 @@ CLAUDE.md
 AGENTS.md
 HF_DEPLOYMENT_BRIEF.md
 PHARMA_IMPLEMENTATION_REPORT_v75.md
+docs/*
+!docs/SUBMISSION_SUMMARY_WITH_HLD.md
 
 # Other notebook variants / scratch drafts (not the canonical notebook)
 *copy*.ipynb
