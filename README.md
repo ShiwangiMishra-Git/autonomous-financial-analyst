@@ -20,11 +20,20 @@ User Question → Unified Query Router → Technology / Pharma AgentProfile
 
 **Notable decisions:** one shared graph reused across domains instead of separate pipelines (avoids guardrail drift); bounded tool/retry loops that fail closed; missing evidence marked `N/A`, never `0`; unsupported companies always flagged, never silently scored.
 
+## Example output
+
+Real recorded turns from the notebook's chat panel — technology (public-tool synthesis) and pharma (private-document RAG with citations):
+
+| Technology | Pharma RAG |
+|---|---|
+| ![Technology example](diagrams/chat_ui_technology_example.png) | ![Pharma RAG example](diagrams/chat_ui_pharma_example.png) |
+
 ## Contents
 
 - `Autonomous_financial_analyst_CLEAN_REBUILD.ipynb` — the main notebook.
+- `content/` — RAG source data and pre-built vector stores (tracked via Git LFS): `Companies-AI-Initiatives.zip` + `vectorstore/` (technology) and `pharma_rag_official_sources.zip` + `vectorstore_pharma_clean/` (pharma filings).
 - `tests/` — deterministic tests for notebook-support code.
-- `diagrams/` — architecture diagrams.
+- `diagrams/` — architecture diagrams and example output.
 - `docs/SUBMISSION_SUMMARY_WITH_HLD.md` — full HLD write-up.
 
 ## Setup
