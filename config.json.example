@@ -1,0 +1,5 @@
+{
+    "OPENAI_API_KEY": "your-openai-or-proxy-api-key",
+    "OPENAI_API_BASE": "https://api.openai.com/v1",
+    "TAVILY_API_KEY": "your-tavily-api-key"
+}

@@ -1,0 +1,21 @@
+# Pinned to match the notebook's own install cell (Autonomous_financial_analyst_Learners_Notebook.ipynb).
+langchain==0.3.27
+langchain-core==0.3.79
+langchain-openai==0.3.11
+langchain-community==0.3.31
+langgraph==0.3.7
+tavily-python
+yfinance==0.2.66
+chromadb==1.3.4
+pypdf==6.2.0
+cryptography==46.0.7
+tiktoken==0.12.0
+
+# Needed to run this notebook locally as a Jupyter kernel (not required on Colab).
+ipykernel
+
+# Needed to run tests/ (deterministic unit tests for logic developed alongside the notebook).
+pytest
+
+# Needed for the risk_profile dropdown widget in Section 2.4b (interactive scoring selection).
+ipywidgets

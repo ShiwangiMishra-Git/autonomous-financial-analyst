@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 1040 915" role="img">
+<title>Full request lifecycle: routing, shared LangGraph workflow, and external providers</title>
+<desc>Top: pre-graph routing (classify industry, resolve company, pick AgentProfile). Middle: the compiled LangGraph itself - agent node, ToolNode with its registered tools, citation validator, and bounded retry loop. Bottom: external providers the tools call out to. The agent node and validator are the only parts inside the compiled graph; routing and providers sit outside it.</desc>
+<style>
+  .box{fill:#f3f2ee;stroke:#73726c;stroke-width:0.75}
+  .outside{fill:#eef4ff;stroke:#3568a8;stroke-width:0.75}
+  .inside{fill:#e8f7ee;stroke:#23834c;stroke-width:0.75}
+  .tool{fill:#f1eaff;stroke:#7950a5;stroke-width:0.75}
+  .provider{fill:#fff4df;stroke:#b87917;stroke-width:0.75}
+  .container{fill:none;stroke-width:1.5;stroke-dasharray:5 4}
+  .container-outside{stroke:#3568a8}
+  .container-inside{stroke:#23834c;stroke-width:2;stroke-dasharray:none;fill:#f6fbf8}
+  .container-provider{stroke:#b87917}
+  .th{font:600 12.5px "Segoe UI",Helvetica,Arial,sans-serif;fill:#2c2c2a}
+  .th-sm{font:600 11px "Segoe UI",Helvetica,Arial,sans-serif;fill:#2c2c2a}
+  .ts{font:400 11px "Segoe UI",Helvetica,Arial,sans-serif;fill:#5f5e5a}
+  .ts-sm{font:400 10px "Segoe UI",Helvetica,Arial,sans-serif;fill:#5f5e5a}
+  .section{font:700 13px "Segoe UI",Helvetica,Arial,sans-serif}
+  .th-outside{fill:#172b4d}
+  .th-inside{fill:#123d25}
+  .th-tool{fill:#35204d}
+  .th-provider{fill:#513300}
+  .arr{stroke:#73726c;stroke-width:1.25;fill:none}
+  .arr-inside{stroke:#4a8f6d;stroke-width:1.25;fill:none}
+  .arr-dotted{stroke:#b87917;stroke-width:1;fill:none}
+</style>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="#73726c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+<marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="#4a8f6d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+<marker id="arrow-orange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="#b87917" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<rect class="container container-outside" x="30" y="15" width="980" height="80" rx="10"/>
+<text class="section th-outside" x="45" y="33" text-anchor="start" dominant-baseline="central">OUTSIDE LANGGRAPH — routing</text>
+<rect class="outside" x="50" y="50" width="215" height="34" rx="8"/>
+<text class="th-sm th-outside" x="157.5" y="60.0" text-anchor="middle" dominant-baseline="central">User submits a</text>
+<text class="th-sm th-outside" x="157.5" y="74.0" text-anchor="middle" dominant-baseline="central">question</text>
+<rect class="outside" x="280" y="50" width="215" height="34" rx="8"/>
+<text class="th-sm th-outside" x="387.5" y="67.0" text-anchor="middle" dominant-baseline="central">Classify industry</text>
+<rect class="outside" x="510" y="50" width="215" height="34" rx="8"/>
+<text class="th-sm th-outside" x="617.5" y="60.0" text-anchor="middle" dominant-baseline="central">Identify company /</text>
+<text class="th-sm th-outside" x="617.5" y="74.0" text-anchor="middle" dominant-baseline="central">resolve ticker</text>
+<rect class="outside" x="740" y="50" width="215" height="34" rx="8"/>
+<text class="th-sm th-outside" x="847.5" y="60.0" text-anchor="middle" dominant-baseline="central">Select tech or pharma</text>
+<text class="th-sm th-outside" x="847.5" y="74.0" text-anchor="middle" dominant-baseline="central">AgentProfile</text>
+<line x1="265" y1="67.0" x2="280" y2="67.0" class="arr" marker-end="url(#arrow)"/>
+<line x1="495" y1="67.0" x2="510" y2="67.0" class="arr" marker-end="url(#arrow)"/>
+<line x1="725" y1="67.0" x2="740" y2="67.0" class="arr" marker-end="url(#arrow)"/>
+<line x1="847.5" y1="84" x2="847.5" y2="125" class="arr" marker-end="url(#arrow)"/>
+<text class="ts-sm" x="855.5" y="113" text-anchor="start" dominant-baseline="central">invoke compiled graph</text>
+<rect class="container-inside" x="30" y="130" width="980" height="500" rx="10"/>
+<text class="section th-inside" x="45" y="150" text-anchor="start" dominant-baseline="central">INSIDE LANGGRAPH — shared agent / tools / validator loop</text>
+<rect class="inside" x="310" y="170" width="220" height="34" rx="8"/>
+<text class="th-sm th-inside" x="420.0" y="187.0" text-anchor="middle" dominant-baseline="central">Create or restore SimpleAgentState</text>
+<line x1="420" y1="204" x2="420" y2="226" class="arr-inside" marker-end="url(#arrow-green)"/>
+<rect class="inside" x="310" y="226" width="220" height="34" rx="8"/>
+<text class="th-sm th-inside" x="420.0" y="236.0" text-anchor="middle" dominant-baseline="central">Agent node (gpt-4o-mini)</text>
+<text class="th-sm th-inside" x="420.0" y="250.0" text-anchor="middle" dominant-baseline="central">evaluates the request</text>
+<line x1="420" y1="260" x2="420" y2="275" class="arr-inside" marker-end="url(#arrow-green)"/>
+<polygon class="inside" points="420,274.0 525.0,305 420,336.0 315.0,305"/>
+<text class="th-sm th-inside" x="420" y="305" text-anchor="middle" dominant-baseline="central"/>
+<text class="th-sm th-inside" x="420" y="298" text-anchor="middle" dominant-baseline="central">Tool calls</text>
+<text class="th-sm th-inside" x="420" y="312" text-anchor="middle" dominant-baseline="central">requested?</text>
+<path d="M 525 305 L 680 305" class="arr-inside" fill="none" marker-end="url(#arrow-green)"/>
+<text class="ts-sm" x="602.5" y="297" text-anchor="middle" dominant-baseline="central">yes</text>
+<rect class="inside" x="680" y="288" width="230" height="34" rx="8"/>
+<text class="th-sm th-inside" x="795.0" y="298.0" text-anchor="middle" dominant-baseline="central">ToolNode executes the</text>
+<text class="th-sm th-inside" x="795.0" y="312.0" text-anchor="middle" dominant-baseline="central">requested tool(s)</text>
+<rect class="tool" x="680" y="342" width="230" height="32" rx="8"/>
+<text class="ts-sm th-tool" x="795.0" y="351.0" text-anchor="middle" dominant-baseline="central">Stock price / history*</text>
+<text class="ts-sm th-tool" x="795.0" y="365.0" text-anchor="middle" dominant-baseline="central">financial metrics†</text>
+<rect class="tool" x="680" y="384" width="230" height="32" rx="8"/>
+<text class="ts-sm th-tool" x="795.0" y="393.0" text-anchor="middle" dominant-baseline="central">News search &amp;</text>
+<text class="ts-sm th-tool" x="795.0" y="407.0" text-anchor="middle" dominant-baseline="central">sentiment scoring</text>
+<rect class="tool" x="680" y="426" width="230" height="32" rx="8"/>
+<text class="ts-sm th-tool" x="795.0" y="435.0" text-anchor="middle" dominant-baseline="central">Technology or</text>
+<text class="ts-sm th-tool" x="795.0" y="449.0" text-anchor="middle" dominant-baseline="central">pharma RAG</text>
+<rect class="tool" x="680" y="468" width="230" height="32" rx="8"/>
+<text class="ts-sm th-tool" x="795.0" y="477.0" text-anchor="middle" dominant-baseline="central">Clinical-trial search</text>
+<text class="ts-sm th-tool" x="795.0" y="491.0" text-anchor="middle" dominant-baseline="central">(pharma only)</text>
+<rect class="tool" x="680" y="510" width="230" height="32" rx="8"/>
+<text class="ts-sm th-tool" x="795.0" y="519.0" text-anchor="middle" dominant-baseline="central">Deterministic</text>
+<text class="ts-sm th-tool" x="795.0" y="533.0" text-anchor="middle" dominant-baseline="central">comparison scoring</text>
+<line x1="795.0" y1="322" x2="795.0" y2="342" class="arr-inside" marker-end="url(#arrow-green)"/>
+<line x1="795.0" y1="542" x2="795.0" y2="560" class="arr-inside" marker-end="url(#arrow-green)"/>
+<rect class="inside" x="680" y="560" width="230" height="34" rx="8"/>
+<text class="th-sm th-inside" x="795.0" y="570.0" text-anchor="middle" dominant-baseline="central">ToolMessages appended</text>
+<text class="th-sm th-inside" x="795.0" y="584.0" text-anchor="middle" dominant-baseline="central">to state</text>
+<path d="M 900.0 577 L 950.0 577 L 950.0 243 L 530 243" class="arr-inside" fill="none" marker-end="url(#arrow-green)"/>
+<text class="ts-sm" x="958.0" y="393.0" text-anchor="start" dominant-baseline="central">add_messages</text>
+<text class="ts-sm" x="958.0" y="405.0" text-anchor="start" dominant-baseline="central">reducer</text>
+<line x1="420" y1="336" x2="420" y2="364" class="arr-inside" marker-end="url(#arrow-green)"/>
+<text class="ts-sm" x="430" y="355" text-anchor="start" dominant-baseline="central">no</text>
+<rect class="inside" x="310" y="381" width="220" height="34" rx="8"/>
+<text class="th-sm th-inside" x="420.0" y="398.0" text-anchor="middle" dominant-baseline="central">Citation-validator node</text>
+<line x1="420" y1="415" x2="420" y2="430" class="arr-inside" marker-end="url(#arrow-green)"/>
+<polygon class="inside" points="420,429.0 525.0,460 420,491.0 315.0,460"/>
+<text class="th-sm th-inside" x="420" y="460" text-anchor="middle" dominant-baseline="central"/>
+<text class="th-sm th-inside" x="420" y="453" text-anchor="middle" dominant-baseline="central">Validation</text>
+<text class="th-sm th-inside" x="420" y="467" text-anchor="middle" dominant-baseline="central">passed?</text>
+<path d="M 315 460 L 270 460" class="arr-inside" fill="none" marker-end="url(#arrow-green)"/>
+<rect class="inside" x="50" y="443" width="220" height="34" rx="8"/>
+<text class="th-sm th-inside" x="160.0" y="453.0" text-anchor="middle" dominant-baseline="central">Add correction</text>
+<text class="th-sm th-inside" x="160.0" y="467.0" text-anchor="middle" dominant-baseline="central">instructions to state</text>
+<text class="ts-sm" x="292.5" y="428" text-anchor="middle" dominant-baseline="central">no, retry</text>
+<text class="ts-sm" x="292.5" y="440" text-anchor="middle" dominant-baseline="central">available</text>
+<path d="M 60 443 L 60 243 L 310 243" class="arr-inside" fill="none" marker-end="url(#arrow-green)"/>
+<line x1="420" y1="491" x2="420" y2="519" class="arr-inside" marker-end="url(#arrow-green)"/>
+<text class="ts-sm" x="430" y="508" text-anchor="start" dominant-baseline="central">yes</text>
+<rect class="inside" x="310" y="536" width="220" height="34" rx="8"/>
+<text class="th-sm th-inside" x="420.0" y="553.0" text-anchor="middle" dominant-baseline="central">LangGraph END</text>
+<path d="M 390 482 L 390 516 L 160 516 L 160 536" class="arr-inside" fill="none" marker-end="url(#arrow-green)"/>
+<rect class="inside" x="50" y="536" width="220" height="34" rx="8"/>
+<text class="th-sm th-inside" x="160.0" y="546.0" text-anchor="middle" dominant-baseline="central">Attach validation</text>
+<text class="th-sm th-inside" x="160.0" y="560.0" text-anchor="middle" dominant-baseline="central">warning</text>
+<text class="ts-sm" x="170" y="508" text-anchor="start" dominant-baseline="central">retry limit reached</text>
+<path d="M 270 553 L 310 553" class="arr-inside" fill="none" marker-end="url(#arrow-green)"/>
+<rect class="container container-provider" x="30" y="690" width="980" height="90" rx="10"/>
+<text class="section th-provider" x="45" y="708" text-anchor="start" dominant-baseline="central">OUTSIDE LANGGRAPH — external providers called by tools</text>
+<rect class="provider" x="50" y="724" width="178" height="34" rx="8"/>
+<text class="th-sm th-provider" x="139.0" y="741.0" text-anchor="middle" dominant-baseline="central">Yahoo Finance</text>
+<rect class="provider" x="240" y="724" width="178" height="34" rx="8"/>
+<text class="th-sm th-provider" x="329.0" y="741.0" text-anchor="middle" dominant-baseline="central">Tavily</text>
+<rect class="provider" x="430" y="724" width="178" height="34" rx="8"/>
+<text class="th-sm th-provider" x="519.0" y="741.0" text-anchor="middle" dominant-baseline="central">OpenAI</text>
+<rect class="provider" x="620" y="724" width="178" height="34" rx="8"/>
+<text class="th-sm th-provider" x="709.0" y="741.0" text-anchor="middle" dominant-baseline="central">ClinicalTrials.gov</text>
+<rect class="provider" x="810" y="724" width="178" height="34" rx="8"/>
+<text class="th-sm th-provider" x="899.0" y="734.0" text-anchor="middle" dominant-baseline="central">Technology &amp; pharma</text>
+<text class="th-sm th-provider" x="899.0" y="748.0" text-anchor="middle" dominant-baseline="central">Chroma stores</text>
+<circle cx="795.0" cy="630" r="3" fill="#b87917"/>
+<text class="ts-sm" x="795.0" y="646" text-anchor="middle" dominant-baseline="central">tool stack calls out to:</text>
+<path d="M 795.0 630 L 795.0 660 L 139.0 660 L 139.0 724" class="arr-dotted" fill="none" marker-end="url(#arrow-orange)" stroke-dasharray="4 3"/>
+<path d="M 795.0 630 L 795.0 660 L 329.0 660 L 329.0 724" class="arr-dotted" fill="none" marker-end="url(#arrow-orange)" stroke-dasharray="4 3"/>
+<path d="M 795.0 630 L 795.0 660 L 519.0 660 L 519.0 724" class="arr-dotted" fill="none" marker-end="url(#arrow-orange)" stroke-dasharray="4 3"/>
+<path d="M 795.0 630 L 795.0 660 L 709.0 660 L 709.0 724" class="arr-dotted" fill="none" marker-end="url(#arrow-orange)" stroke-dasharray="4 3"/>
+<path d="M 795.0 630 L 795.0 660 L 899.0 660 L 899.0 724" class="arr-dotted" fill="none" marker-end="url(#arrow-orange)" stroke-dasharray="4 3"/>
+<line x1="420" y1="630" x2="420" y2="793" class="arr" marker-end="url(#arrow)"/>
+<text class="ts-sm" x="430" y="645" text-anchor="start" dominant-baseline="central">return final state</text>
+<rect class="container container-outside" x="30" y="810" width="980" height="60" rx="10"/>
+<text class="section th-outside" x="45" y="826" text-anchor="start" dominant-baseline="central">OUTSIDE LANGGRAPH — presentation</text>
+<rect class="outside" x="90" y="838" width="200" height="28" rx="8"/>
+<text class="th-sm th-outside" x="190.0" y="852.0" text-anchor="middle" dominant-baseline="central">Extract final answer</text>
+<line x1="290" y1="852" x2="330" y2="852" class="arr" marker-end="url(#arrow)"/>
+<rect class="outside" x="330" y="838" width="220" height="28" rx="8"/>
+<text class="th-sm th-outside" x="440.0" y="845.0" text-anchor="middle" dominant-baseline="central">Display in notebook or</text>
+<text class="th-sm th-outside" x="440.0" y="859.0" text-anchor="middle" dominant-baseline="central">chat interface</text>
+<text class="ts-sm" x="45" y="885">* get_stock_history is agent-callable directly only in the technology profile; pharma reaches it internally via compute_pharma_comparison_scores.</text>
+<text class="ts-sm" x="45" y="899">† get_financial_metrics has no @tool decorator and is never agent-callable directly - both scoring tools call it internally, in plain Python.</text>
+</svg>
