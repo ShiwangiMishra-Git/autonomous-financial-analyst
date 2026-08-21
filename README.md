@@ -30,7 +30,7 @@ Real recorded turns from the notebook's chat panel — technology (public-tool s
 
 ## Contents
 
-- `Autonomous_financial_analyst_CLEAN_REBUILD.ipynb` — the main notebook.
+- `Autonomous_financial_analyst_FINAL_SUBMISSION.ipynb` — the main notebook.
 - `content/` — RAG source data and pre-built vector stores (tracked via Git LFS): `Companies-AI-Initiatives.zip` + `vectorstore/` (technology) and `pharma_rag_official_sources.zip` + `vectorstore_pharma_clean/` (pharma filings).
 - `tests/` — deterministic tests for notebook-support code.
 - `diagrams/` — architecture diagrams and example output.
