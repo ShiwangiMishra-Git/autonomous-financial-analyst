@@ -5,10 +5,9 @@ A LangGraph-based agentic financial research assistant, built for a JHU Agentic 
 ## Contents
 
 - `Autonomous_financial_analyst_CLEAN_REBUILD.ipynb` — the main notebook: builds and tests the agent (Part 1) and the RAG-enhanced agent (Part 2).
-- `scripts/` — supporting implementation scripts for the multi-industry research pipeline.
 - `tests/` — deterministic tests for notebook-support code.
 - `docs/` — architecture notes, design docs, and diagrams.
-- `SUBMISSION_SUMMARY_WITH_HLD.md`, `HF_DEPLOYMENT_BRIEF.md`, `PHARMA_IMPLEMENTATION_REPORT_v75.md` — write-ups accompanying the submission.
+- `SUBMISSION_SUMMARY_WITH_HLD.md` — write-up accompanying the submission.
 - `FinancialAgenticFlow.pdf` and the `.png`/`.svg` diagrams — architecture/flow diagrams.
 
 ## Setup
@@ -22,10 +21,12 @@ A LangGraph-based agentic financial research assistant, built for a JHU Agentic 
    ```bash
    pip install -r requirements.txt
    ```
-3. Run the notebook locally with Jupyter (`./run_jupyter.sh`) or open it in VS Code/Cursor and select a kernel with the dependencies installed.
+3. Run the notebook locally with `jupyter lab` or open it in VS Code/Cursor and select a kernel with the dependencies installed.
 
 Part 2 (RAG) expects a local `content/Companies-AI-Initiatives.zip` — this path is Colab-specific in the original notebook and may need adjusting to run locally.
 
 ## Architecture
 
-See `CLAUDE.md` / `AGENTS.md` for a detailed breakdown of the agent graph, system prompts, and tools, and `docs/` for design documents and diagrams.
+The notebook builds the same LangGraph agent three times with increasing sophistication (a plain reactive baseline, a goal-oriented "agent charter," and a full charter with explicit tool inventory and behavioral rules), then extends it with a RAG pipeline over private company documents (Part 2). Tools include stock price/history lookups (`yfinance`), financial news search (Tavily), LLM-based sentiment analysis, and a private-document RAG tool backed by Chroma.
+
+See `docs/` for detailed design documents and diagrams.

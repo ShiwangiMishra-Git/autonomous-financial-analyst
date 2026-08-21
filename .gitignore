@@ -30,6 +30,10 @@ OPENAI/
 
 scripts/
 run_jupyter.sh
+CLAUDE.md
+AGENTS.md
+HF_DEPLOYMENT_BRIEF.md
+PHARMA_IMPLEMENTATION_REPORT_v75.md
 
 # Other notebook variants / scratch drafts (not the canonical notebook)
 *copy*.ipynb
