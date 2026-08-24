@@ -1,6 +1,6 @@
 # Autonomous Financial Analyst
 
-A LangGraph-based agentic financial research assistant, built for a JHU Agentic AI course assignment. The base agent is built up in increasing sophistication (reactive → goal-oriented → full charter), then extended with RAG over private company documents, and further extended with a unified router that dispatches technology and pharma research questions through one shared agent/tools/citation-validator graph.
+A LangGraph-based agentic financial research assistant, built as part of John Hopkins Agentic AI program. The base agent is built up in increasing sophistication (reactive → goal-oriented → full charter), then extended with RAG over private company documents, and further extended with a unified router that dispatches technology and pharma research questions through one shared agent/tools/citation-validator graph.
 
 Full write-up (architecture, trade-offs, limitations, future scope): [docs/SUBMISSION_SUMMARY_WITH_HLD.md](docs/SUBMISSION_SUMMARY_WITH_HLD.md).
 
