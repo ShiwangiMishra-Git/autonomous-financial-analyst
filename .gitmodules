@@ -1,0 +1,3 @@
+[submodule "hf_spaces/autonomous-financial-analyst"]
+	path = hf_spaces/autonomous-financial-analyst
+	url = https://huggingface.co/spaces/shivMi/autonomous-financial-analyst
