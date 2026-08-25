@@ -1,5 +1,7 @@
 # Autonomous Financial Analyst
 
+**Live demo:** [shivmi-autonomous-financial-analyst.hf.space](https://shivmi-autonomous-financial-analyst.hf.space) ([Space page](https://huggingface.co/spaces/shivMi/autonomous-financial-analyst))
+
 A LangGraph-based agentic financial research assistant, built for a JHU Agentic AI course assignment. The base agent is built up in increasing sophistication (reactive → goal-oriented → full charter), then extended with RAG over private company documents, and further extended with a unified router that dispatches technology and pharma research questions through one shared agent/tools/citation-validator graph.
 
 Full write-up (architecture, trade-offs, limitations, future scope): [docs/SUBMISSION_SUMMARY_WITH_HLD.md](docs/SUBMISSION_SUMMARY_WITH_HLD.md).
@@ -35,6 +37,7 @@ Real recorded turns from the notebook's chat panel — technology (public-tool s
 - `tests/` — deterministic tests for notebook-support code.
 - `diagrams/` — architecture diagrams and example output.
 - `docs/SUBMISSION_SUMMARY_WITH_HLD.md` — full HLD write-up.
+- `hf_spaces/autonomous-financial-analyst/` — the deployed [Hugging Face Space](https://huggingface.co/spaces/shivMi/autonomous-financial-analyst) (Gradio app), extracted from the notebook into a UI-agnostic `financial_analyst/` package. This is a **git submodule** with its own remote/history — a plain `git clone` of this repo leaves it empty; use `git clone --recurse-submodules`, or `git submodule update --init` afterward, to fetch it.
 
 ## Setup
 
