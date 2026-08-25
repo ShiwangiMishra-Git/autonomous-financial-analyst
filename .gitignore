@@ -20,8 +20,8 @@ __pycache__/
 content/*
 !content/Companies-AI-Initiatives.zip
 !content/pharma_rag_official_sources.zip
-!content/vectorstore/
-!content/vectorstore_pharma_clean/
+!content/vectorstore_technology/
+!content/vectorstore_pharma/
 .api_cache/
 .research_runs/
 financial_chat_sessions/
@@ -29,7 +29,6 @@ financial_demo_runs/
 financial_edge_case_runs/
 financial_ui_sequence_runs/
 pharma_acceptance_runs/
-hf_spaces/
 OPENAI/
 
 scripts/
